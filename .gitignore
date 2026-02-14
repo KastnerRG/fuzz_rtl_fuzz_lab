@@ -23,3 +23,6 @@ log
 *__pycache__/
 venv/
 coveragePlot.png
+
+seeds*
+example*
