@@ -18,7 +18,7 @@ scalacOptions ++= Seq(
 // SNAPSHOT repositories
 resolvers += Resolver.sonatypeRepo("snapshots")
 
-libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.5-SNAPSHOT"
+libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.5.6"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.6" % Test
 //libraryDependencies += "com.lihaoyi" %% "upickle" % "1.4.2"
 

@@ -1,3 +1,7 @@
+all_rtl_fuzz_lab*
+example*
+seeds/
+
 /bin/
 /project/target
 /project/project
