@@ -26,6 +26,12 @@ parser.add_argument('-a', '--afl-path', type=str, default='~/AFL',
                     help="The path to the AFL folder")
 parser.add_argument('--seed', type=str, default="",
                     help="Name of the seed in src/fuzzing/template_seeds/ to fuzz on")
+parser.add_argument('--warmup', type=int, default=13,
+                    help="Seconds to let AFLDriver instrument the FIRRTL and build "
+                         "the Verilator model before AFL connects. The default suits "
+                         "the small bundled designs; larger circuits need more, and "
+                         "starting AFL too early fails with 'Fork server handshake "
+                         "failed'.")
 
 args = parser.parse_args(python_args.split()[1:])
 
@@ -78,7 +84,7 @@ for i in range(args.iterations):
     os.system("java -cp target/scala-2.12/rtl-fuzz-lab-assembly-0.1.jar fuzzing.afl.AFLDriver {SCALA_ARGS} --Folder {FOLDER} &".format(
         SCALA_ARGS=scala_args, FOLDER=out_folder_run))
 
-    os.system("sleep 13s")
+    os.system("sleep {WARMUP}s".format(WARMUP=args.warmup))
 
     os.system('timeout {TIME_STRING}s {AFL_PATH}/afl-fuzz -d -i seeds -o {OUT_FOLDER_RUN} -f input -- ./fuzzing/afl-proxy a2j j2a log'.format(
         TIME_STRING=str(args.time * 60 + 5), AFL_PATH=args.afl_path, OUT_FOLDER_RUN=out_folder_run))
